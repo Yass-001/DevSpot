@@ -38,6 +38,8 @@ namespace DevSpot
 
                 // Seed roles
                 RoleSeeder.SeedRolesAsync(services).Wait();
+                // Seed users
+                UserSeeder.SeedUsersAsync(services).Wait();
             }
 
             app.UseHttpsRedirection();
