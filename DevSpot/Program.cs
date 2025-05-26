@@ -35,13 +35,9 @@ namespace DevSpot
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                if(!roleManager.RoleExistsAsync(Roles.ADMIN).Result)
-                {
-                    var role = new IdentityRole("Admin");
-                    var result = roleManager.CreateAsync(role).Result;
-                }
+                // Seed roles
+                RoleSeeder.SeedRolesAsync(services).Wait();
             }
 
             app.UseHttpsRedirection();
