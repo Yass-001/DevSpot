@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using DevSpot.Constants;
 
 namespace DevSpot.Areas.Identity.Pages.Account
 {
@@ -126,6 +127,17 @@ namespace DevSpot.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    if(Input.IsJobSeeker)
+                    {
+                        // Additional logic for Job Seeker registration can be added here
+                        await _userManager.AddToRoleAsync(user, Roles.JOB_SEEKER);
+                    }
+                    else
+                    {
+                        // Additional logic for Employer registration can be added here
+                        await _userManager.AddToRoleAsync(user, Roles.EMPLOYER);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

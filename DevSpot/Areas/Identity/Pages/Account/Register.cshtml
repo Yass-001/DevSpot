@@ -32,6 +32,10 @@
                     <input class="form-check-input" checked asp-for="Input.IsJobSeeker" type="radio" value="true" />
                     <label class="form-check-label">Job Seeker</label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Input.IsJobSeeker" type="radio" value="false" />
+                    <label class="form-check-label">Employer</label>
+                </div>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
