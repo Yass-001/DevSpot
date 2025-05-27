@@ -25,6 +25,7 @@ namespace DevSpot.Data
                     UserName = email,
                     EmailConfirmed = true
                 };
+
                 // Create the user with a password
                 var result = await userManager.CreateAsync(user, password);
 
