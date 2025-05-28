@@ -2,6 +2,8 @@ using DevSpot.Data;
 using DevSpot.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using DevSpot.Repositiries;
+using DevSpot.Models;
 
 namespace DevSpot
 {
@@ -15,9 +17,11 @@ namespace DevSpot
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("Database")));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) // ? true
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            builder.Services.AddScoped<IRepository<JobPosting>, JobPostingRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
