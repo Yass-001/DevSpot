@@ -72,7 +72,7 @@ namespace DevSpot.Tests
 
             // Act
             await dbContext.JobPostings.AddAsync(jobPosting);
-            await dbContext.SaveChangesAsync();
+            //await dbContext.SaveChangesAsync();
 
             var retrievedJobPosting = await repository.GetByIdAsync(jobPosting.Id);
 
@@ -82,7 +82,7 @@ namespace DevSpot.Tests
         }
 
         [Fact]
-        public async Task GetByIdAsync_ShouldThrowKeyNotFoundExeption()
+        public async Task GetByIdAsync_ShouldThrowKeyNotFoundException()
         {
             // Arrange
             var dbContext = CreateContext();
@@ -95,6 +95,65 @@ namespace DevSpot.Tests
                 () => repository.GetByIdAsync(999) // Assuming 999 does not exist
             );
         }
+
+        [Fact]
+        public async Task AddAsync_ShouldGetAllJobPostings()
+        {
+            // Arrange
+            var dbContext = CreateContext();
+            var repository = new JobPostingRepository(dbContext);
+            var jobPosting = new JobPosting
+            {
+                Title = "Test Job",
+                Description = "Test Description",
+                Company = "Test Company",
+                Location = "Test Location",
+                PostedDate = DateTime.UtcNow,
+                UserId = "test-user-id"
+            };
+            var jobPosting2 = new JobPosting
+            {
+                Title = "Test2 Job",
+                Description = "Test2 Description",
+                Company = "Test2 Company",
+                Location = "Test2 Location",
+                PostedDate = DateTime.UtcNow,
+                UserId = "test2-user-id"
+            };
+            var jobPosting3 = new JobPosting
+            {
+                Title = "Test3 Job",
+                Description = "Test3 Description",
+                Company = "Test3 Company",
+                Location = "Test3 Location",
+                PostedDate = DateTime.UtcNow,
+                UserId = "test3-user-id"
+            };
+
+            List<JobPosting> jobPostings = new List<JobPosting>
+            {
+                jobPosting,
+                jobPosting2,
+                jobPosting3
+            };
+
+            // Act
+            foreach (var jp in jobPostings)
+            {
+                await repository.AddAsync(jp);
+            }
+
+            var allJobPostings = await repository.GetAllAsync();
+
+            // Assert
+            Assert.NotEmpty(allJobPostings);
+            Assert.Equal(3, allJobPostings.Count());
+            Assert.Contains(allJobPostings, jp => jp.Title == "Test Job" && jp.Description == "Test Description");
+            Assert.Equal(jobPostings, allJobPostings);
+        }
+
+
+
 
     }
 }
