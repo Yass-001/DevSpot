@@ -1,5 +1,6 @@
 ﻿using DevSpot.Models;
 using DevSpot.Repositiries;
+using DevSpot.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -31,15 +32,25 @@ namespace DevSpot.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(JobPosting jobPosting)
+        public async Task<IActionResult> Create(JobPostingViewModel jobPostingViewModel)
         {
-            //ModelState.Remove("UserId"); // Remove UserId from ModelState to avoid validation error // bad praktice
-            //ModelState.Remove("User"); // Remove User from ModelState to avoid validation error // bad praktice
+            //ModelState.Remove("UserId"); // Remove UserId from ModelState to avoid validation error
+            //for "JobPosting jobPosting" // bad praktice
+            //ModelState.Remove("User"); // Remove User from ModelState to avoid validation error
+            //for "JobPosting jobPosting" // bad praktice
 
             if (ModelState.IsValid)
             {
-                // Set the UserId to the current user's Id
-                jobPosting.UserId = _userManager.GetUserId(User);
+                var jobPosting = new JobPosting
+                {
+                    Title = jobPostingViewModel.Title,
+                    Description = jobPostingViewModel.Description,
+                    Company = jobPostingViewModel.Company,
+                    Location = jobPostingViewModel.Location,
+                    //IsApproved = false, // Default set to false in model
+                    UserId = _userManager.GetUserId(User) // Set the UserId to the current user's Id
+                };
+
                 await _repository.AddAsync(jobPosting);
             }
 
