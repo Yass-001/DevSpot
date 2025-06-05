@@ -1,12 +1,14 @@
 ﻿using DevSpot.Models;
 using DevSpot.Repositiries;
 using DevSpot.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace DevSpot.Controllers
 {
+    [Authorize]
     public class JobPostingsController : Controller
     {
         private readonly IRepository<JobPosting> _repository;
@@ -20,18 +22,21 @@ namespace DevSpot.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var jobPostings = await _repository.GetAllAsync(); // IEnumerable <JobPosting>
             return View(jobPostings);
         }
 
+        [Authorize(Roles = "Admin,Employer")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Employer")]
         public async Task<IActionResult> Create(JobPostingViewModel jobPostingViewModel)
         {
             //ModelState.Remove("UserId"); // Remove UserId from ModelState to avoid validation error
