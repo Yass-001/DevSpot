@@ -13,7 +13,7 @@
     @foreach (var jobPosting in Model)
     {
         <div class="col-md-4 mb-3">
-            <div class="list-group-item list-group-item-primary h-100">
+            <div class="list-group-item list-group-item-primary h-100" id="job-posting-@jobPosting.Id">
                 <h3 style="color: #863939; font-weight: bold;">@jobPosting.Title</h3>
                 <p>@jobPosting.Description</p>
                 <p><strong>Company:</strong> @jobPosting.Company</p>
@@ -43,10 +43,11 @@
                 // fail -> alert the user that the deletion failed
 
                 $.ajax({
-                        url: "@Url.Action("Delete", "JobPostings")/" = jobId,
+                        url: "@Url.Action("Delete", "JobPostings")/" + jobId,
                         type: 'DELETE',
                         success: function (result) {
                             // Remove the job from the page
+                            $('#job-posting-' + jobId).remove();
                         },
                         error: function (err) {
                             alert('Failed to delete the job.');
