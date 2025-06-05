@@ -22,12 +22,37 @@
 
                 @if (User.IsInRole(Roles.ADMIN) || User.IsInRole(Roles.EMPLOYER))
                 {
-                    <div class="btn btn-sm btn-danger">
+                    <div onclick="deleteJobPosting(@jobPosting.Id)" class="btn btn-sm btn-danger">
                         Delete
                     </div>
                 }
-                
             </div>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        // Add any additional JavaScript needed for this page
+        function deleteJobPosting (jobId) {
+            if(confirm("Are you sure you want to delete this job?")) {
+            
+                // url
+                // type (delete)
+                // success -> visually delete the jobPosting from the page
+                // fail -> alert the user that the deletion failed
+
+                $.ajax({
+                        url: "@Url.Action("Delete", "JobPostings")/" = jobId,
+                        type: 'DELETE',
+                        success: function (result) {
+                            // Remove the job from the page
+                        },
+                        error: function (err) {
+                            alert('Failed to delete the job.');
+                        }
+                });
+            }
+        }
+    </script>
+}
