@@ -1,4 +1,5 @@
-﻿@model IEnumerable<DevSpot.Models.JobPosting>;
+﻿@using DevSpot.Constants
+@model IEnumerable<DevSpot.Models.JobPosting>;
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,6 +19,14 @@
                 <p><strong>Company:</strong> @jobPosting.Company</p>
                 <p><strong>Location:</strong> @jobPosting.Location</p>
                 <p><strong>Posted on:</strong> @jobPosting.PostedDate.ToShortDateString()</p>
+
+                @if (User.IsInRole(Roles.ADMIN) || User.IsInRole(Roles.EMPLOYER))
+                {
+                    <div class="btn btn-sm btn-danger">
+                        Delete
+                    </div>
+                }
+                
             </div>
         </div>
     }
