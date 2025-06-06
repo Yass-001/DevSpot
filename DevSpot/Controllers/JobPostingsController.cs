@@ -1,4 +1,5 @@
-﻿using DevSpot.Models;
+﻿using DevSpot.Constants;
+using DevSpot.Models;
 using DevSpot.Repositiries;
 using DevSpot.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -67,6 +68,20 @@ namespace DevSpot.Controllers
         [Authorize(Roles = "Admin,Employer")]
         public async Task<IActionResult> Delete(int id)
         {
+            var jobPosting = await _repository.GetByIdAsync(id);
+            if (jobPosting == null)
+            {
+                return NotFound();
+            }
+
+            var userId = _userManager.GetUserId(User);
+            if (jobPosting.UserId != userId && !User.IsInRole(Roles.ADMIN))
+            {
+                return Forbid(); // Only allow the owner or admin to delete
+            }
+
+            await _repository.DeleteAsync(id);
+
             return Ok();
         }
 
