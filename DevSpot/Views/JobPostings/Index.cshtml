@@ -22,10 +22,13 @@
 
                 @if (User.IsInRole(Roles.ADMIN) || User.IsInRole(Roles.EMPLOYER))
                 {
-                    <div onclick="deleteJobPosting(@jobPosting.Id)" class="btn btn-sm btn-danger">
+                    <div onclick="deleteJobPosting(@jobPosting.Id)"
+                    class="btn btn-sm btn-danger">
                         Delete
                     </div>
                 }
+
+                <a asp-action="DeleteEasy" asp-route-id="@jobPosting.Id">Delete</a>
             </div>
         </div>
     }
