@@ -13,7 +13,7 @@ namespace DevSpot.Controllers
     public class JobPostingsController : Controller
     {
         private readonly IRepository<JobPosting> _repository;
-        private readonly UserManager<IdentityUser> _userManager; //make interface for UserManager
+        private readonly UserManager<IdentityUser> _userManager; //make interface for UserManager !!!
 
         public JobPostingsController(
             IRepository<JobPosting> repository,
