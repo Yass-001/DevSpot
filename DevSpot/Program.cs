@@ -45,7 +45,7 @@ namespace DevSpot
                 // Seed users
                 UserSeeder.SeedUsersAsync(services).Wait();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseRouting();
 

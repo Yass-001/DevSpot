@@ -26,7 +26,6 @@ namespace DevSpot.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-           
 
             if(User.IsInRole(Roles.EMPLOYER))
             {
