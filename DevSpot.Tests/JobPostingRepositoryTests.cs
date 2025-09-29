@@ -1,10 +1,12 @@
 ﻿using DevSpot.Data;
 using DevSpot.Models;
 using DevSpot.Repositiries;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,8 +46,12 @@ namespace DevSpot.Tests
             await dbContext.SaveChangesAsync(); // ?!
 
             var addingJPResult = await dbContext.JobPostings.FindAsync(jobPosting.Id);
-    //        var addingJPResult = await dbContext.JobPostings
-    //          .FirstOrDefaultAsync(jp => jp.Title == jobPosting.Title);
+            // var addingJPResult = await dbContext.JobPostings
+            // .FirstOrDefaultAsync(jp => jp.Title == jobPosting.Title); // May return the wrong entity if multiple job postings have the same title.
+            // If you use AsNoTracking(), EF Core won’t keep the entity in the cache/change tracker.
+            // Use FindAsync(jobPosting.Id) when you know the primary key.
+            // It's faster, more precise, and less error-prone.
+            // Use FirstOrDefaultAsync only if you don't have the primary key and are sure the property is unique 
 
             var addingJPResult2 = await dbContext.JobPostings
                 .FirstOrDefaultAsync(jp => jp.Title == "Title");
