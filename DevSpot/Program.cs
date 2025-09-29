@@ -23,7 +23,7 @@ namespace DevSpot
 
             builder.Services.AddScoped<IRepository<JobPosting>, JobPostingRepository>();
 
-            // Add services to the container.
+            // Add services to the DI container.
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
