@@ -51,9 +51,9 @@ namespace DevSpot.Controllers
         public async Task<IActionResult> Create(JobPostingViewModel jobPostingViewModel)
         {
             //ModelState.Remove("UserId"); // Remove UserId from ModelState to avoid validation error
-            //for "JobPosting jobPosting" // bad praktice
+            //for "JobPosting jobPosting" // bad practice
             //ModelState.Remove("User"); // Remove User from ModelState to avoid validation error
-            //for "JobPosting jobPosting" // bad praktice
+            //for "JobPosting jobPosting" // bad practice
 
             if (ModelState.IsValid)
             {
