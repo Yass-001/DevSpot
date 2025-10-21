@@ -12,6 +12,14 @@ namespace DevSpot.Data
             : base(options)
         {
         }
+
+        // chatGPT suggested to add this  for serverside guid generation
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<JobPosting>()
+        //        .Property(o => o.Id)
+        //        .HasDefaultValueSql("NEWSEQUENTIALID()");
+        //}
     }
 
 }
