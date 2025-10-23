@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using DevSpot.Contracts;
 
 namespace DevSpot.Controllers
 {
@@ -13,11 +14,11 @@ namespace DevSpot.Controllers
     public class JobPostingsController : Controller
     {
         private readonly IRepository<JobPosting> _repository;
-        private readonly UserManager<IdentityUser> _userManager; //make interface for UserManager !!!
+        private readonly IUserManager _userManager; //make interface for UserManager !!!
 
         public JobPostingsController(
             IRepository<JobPosting> repository,
-            UserManager<IdentityUser> userManager)
+            IUserManager userManager)
         {
             _repository = repository;
             _userManager = userManager;

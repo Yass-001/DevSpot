@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DevSpot.Repositiries;
 using DevSpot.Models;
+using DevSpot.Contracts;
 
 namespace DevSpot
 {
@@ -20,6 +21,8 @@ namespace DevSpot
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) // ? true
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            builder.Services.AddScoped<IUserManager, UserManager>();
 
             builder.Services.AddScoped<IRepository<JobPosting>, JobPostingRepository>();
 
