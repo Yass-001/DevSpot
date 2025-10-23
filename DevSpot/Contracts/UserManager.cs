@@ -13,8 +13,10 @@ namespace DevSpot.Contracts
         }
 
         public string GetUserId(ClaimsPrincipal principal)
-        {
-            return _userManager.GetUserId(principal);
-        }
+                   => _userManager.GetUserId(principal);
+
+        public Task<IdentityResult> ChangePasswordAsync(IdentityUser user, string currentPassword, string newPassword)
+            => _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
     }
 }
